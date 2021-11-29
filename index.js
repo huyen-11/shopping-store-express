@@ -4,6 +4,14 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
+const unhandledRejections = new Map();
+
+process.on('unhandledRejection', (reason, promise) => {
+  unhandledRejections.set(promise, reason);
+});
+process.on('rejectionHandled', (promise) => {
+  unhandledRejections.delete(promise);
+});
 
 mongoose.connect(process.env.MONGO_URL, {
 	useCreateIndex: true,	
