@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 var productSchema = new mongoose.Schema({
   name: {
     type: String,
-    text: true
+    text: true,
   },
   desc: String,
   price: String,
@@ -14,7 +14,7 @@ var productSchema = new mongoose.Schema({
   colorPicker: Array,
   sale: {
     type: Boolean,
-    default: false
+    default: false,
   },
   imageItem: Array,
   date: Date,

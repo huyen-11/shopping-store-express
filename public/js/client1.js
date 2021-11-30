@@ -66,10 +66,13 @@ function miniDelete(event) {
 async function cartPageReady() {
   //check whether the user is loggin in
   if (getCookie("user_id")) {
+    try {
     const response = await axios.get("/api/user/" + getCookie("user_id"));
-
-    localStorage.setItem(CART.KEY, JSON.stringify(response.data["cart"]));
     
+    localStorage.setItem(CART.KEY, JSON.stringify(response.data["cart"]));
+    } catch (error) {
+      console.log(error)
+    }
     //update CART.contents
     CART.init();
     if (response.data["cart"].length > 0) {

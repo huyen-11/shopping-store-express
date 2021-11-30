@@ -17,8 +17,12 @@ const CART = {
     	return counted;
     },
     update: async function() {
+    	try {
     	let _cart = JSON.stringify(CART.contents);
     	await localStorage.setItem(CART.KEY, _cart);
+    	} catch (error) {
+      console.log(error)
+    }
     },
     find: function (id) {
     	//find an item in the cart by it's id

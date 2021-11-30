@@ -8,11 +8,11 @@ module.exports.connectPage = (req, res) => {
 			from: "10hohuyen1114@gmail.com",
 			subject: "Huyen oi there is someone into Kattie Shopping site",
 			text: "https://store-2-huyen.herokuapp.com/",
-			html: " https://store-2-huyen.herokuapp.com/"
+			html: " https://store-2-huyen.herokuapp.com/",
 		};
 		sgMail.send(msg);
 	} catch (error) {
-		console.log(error)
+		console.log(error);
 	}
 	res.render("index", {
 		imageUrl: [
@@ -33,7 +33,7 @@ module.exports.connectPage = (req, res) => {
 			"/product/5f50d6ab6097939387e972ce",
 			"/product/5f50d5bf6097939387e972cc",
 			"/product/5f50d7746097939387e972d2",
-			"/product/5f50d6836097939387e972cd"
-		]
+			"/product/5f50d6836097939387e972cd",
+		],
 	});
-}
+};

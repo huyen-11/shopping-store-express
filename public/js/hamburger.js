@@ -4,9 +4,9 @@ function openMiniMenu() {
 }
 
 function closeMiniMenu(event) {
-  if (event.target == phoneMenuModal) {
-	phoneMenuModal.classList.toggle("phone-menu-bar-open");
-  }
+	if (event.target == phoneMenuModal) {
+		phoneMenuModal.classList.toggle("phone-menu-bar-open");
+	}
 }
 const phoneMenuModal = document.querySelector(".phone-menu-bar-modal");
 

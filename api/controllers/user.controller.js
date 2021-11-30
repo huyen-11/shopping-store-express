@@ -3,8 +3,12 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 module.exports.usersIndex = async (req, res) => {
-  var users = await User.find();
-  res.json(users);
+  try {
+    var users = await User.find();
+    res.json(users);
+  } catch (error) {
+    res.sendStatus(404);
+  }
 };
 
 module.exports.userSingleDetail = async (req, res) => {
@@ -49,19 +53,20 @@ module.exports.userSigninCheck = async (req, res) => {
       res.send(false);
       return;
     } else {
-      bcrypt.compare(req.body.signinPassword, user.password, function (
-        err,
-        result
-      ) {
-        // result = false
-        if (result === false) {
-          // console.log(user, 2);
-          res.send(false);
-        } else {
-          // console.log(user, 3);
-          res.send(true);
+      bcrypt.compare(
+        req.body.signinPassword,
+        user.password,
+        function (err, result) {
+          // result = false
+          if (result === false) {
+            // console.log(user, 2);
+            res.send(false);
+          } else {
+            // console.log(user, 3);
+            res.send(true);
+          }
         }
-      });
+      );
     }
   });
 };

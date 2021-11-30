@@ -9,14 +9,18 @@ module.exports.signup = (req, res) => {
 
 module.exports.postSignup = (req, res) => {
   bcrypt.hash(req.body.password, saltRounds, async function (err, hash) {
-    // Store hash in your password DB.
-    req.body.password = hash;
-    var user = await User.create(req.body); 
-    console.log(user);
-    res.cookie("user_id", user._id, {
-      signed: true
-    });
-    res.redirect("/");
+    try {
+      // Store hash in your password DB.
+      req.body.password = hash;
+      var user = await User.create(req.body);
+      console.log(user);
+      res.cookie("user_id", user._id, {
+        signed: true,
+      });
+      res.redirect("/");
+    } catch (error) {
+      res.sendStatus(404);
+    }
   });
 };
 
@@ -34,36 +38,36 @@ module.exports.postSignin = (req, res) => {
       });
       return;
     } else {
-      bcrypt.compare(req.body.signinPassword, user.password, function (
-        err,
-        result
-      ) {
-        // result = false
-        if (result === false) {
-          console.log(user, 2);
-          res.render("sign/signin", {
-            errors: "Either email or password is wrong",
-          });
-        } else {
-          console.log(user, 3);
-          res.cookie("user_id", user._id, {
-            signed: true
-          });
-          res.redirect("/"); 
+      bcrypt.compare(
+        req.body.signinPassword,
+        user.password,
+        function (err, result) {
+          // result = false
+          if (result === false) {
+            console.log(user, 2);
+            res.render("sign/signin", {
+              errors: "Either email or password is wrong",
+            });
+          } else {
+            console.log(user, 3);
+            res.cookie("user_id", user._id, {
+              signed: true,
+            });
+            res.redirect("/");
+          }
         }
-      });
+      );
     }
   });
 };
 
 module.exports.signout = (req, res) => {
   res.clearCookie("user_id", {
-    signed: true
-  })
+    signed: true,
+  });
   res.redirect("/");
 };
 
 module.exports.errorSign = (req, res) => {
   res.render("error");
 };
-
